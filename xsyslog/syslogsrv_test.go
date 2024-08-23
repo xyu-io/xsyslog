@@ -10,7 +10,7 @@ import (
 )
 
 func TestSysLogSrv(t *testing.T) {
-	ctx, _ := context.WithTimeout(context.Background(), time.Second*5)
+	ctx, _ := context.WithTimeout(context.Background(), time.Second*20)
 
 	srv := NewSyslogServer(514, logrus.New(), ctx)
 
@@ -28,7 +28,7 @@ func TestSysLogSrv(t *testing.T) {
 		}
 	}()
 
-	time.Sleep(time.Second * 15)
+	time.Sleep(time.Second * 22)
 }
 
 func TestSysLogSrvForever(t *testing.T) {
