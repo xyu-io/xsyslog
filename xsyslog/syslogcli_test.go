@@ -16,7 +16,7 @@ func TestSysLogCli(t *testing.T) {
 	// 创建发送者实例
 	sysCli, err := NewSyslogClient(Config{
 		Network:       "udp",
-		Address:       "127.0.0.1:515",
+		Address:       "127.0.0.1:514",
 		AppName:       "syslog",
 		Formatter:     RFC5424Formatter,
 		Level:         logrus.InfoLevel,
