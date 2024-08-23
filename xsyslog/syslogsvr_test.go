@@ -12,9 +12,9 @@ import (
 func TestSysLogSrv(t *testing.T) {
 	ctx, _ := context.WithTimeout(context.Background(), time.Second*20)
 
-	srv := NewSyslogServer(514, logrus.New(), ctx)
+	svr := NewSyslogServer(514, logrus.New(), ctx)
 
-	msg, err := srv.RunSyslogReceiver()
+	msg, err := svr.RunSyslogReceiver()
 	if err != nil {
 		return
 	}
@@ -34,9 +34,9 @@ func TestSysLogSrv(t *testing.T) {
 func TestSysLogSrvForever(t *testing.T) {
 	ctx := context.Background()
 
-	srv := NewSyslogServer(515, logrus.New(), ctx)
+	svr := NewSyslogServer(515, logrus.New(), ctx)
 
-	msg, err := srv.RunSyslogReceiver()
+	msg, err := svr.RunSyslogReceiver()
 	if err != nil {
 		return
 	}
