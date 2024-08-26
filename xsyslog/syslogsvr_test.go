@@ -25,7 +25,7 @@ func TestSysLogSrv(t *testing.T) {
 			case e := <-msg:
 				fmt.Printf("syslog recieved >> %+v \n", e)
 			default:
-				// avoid panic with goroutine asleep
+				//avoid panic with goroutine asleep
 			}
 		}
 	}()

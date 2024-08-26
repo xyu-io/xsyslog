@@ -76,11 +76,9 @@ func (svr *SyslogServer) stop() {
 	select {
 	case <-svr.ctx.Done():
 		svr.log.Warn("syslog server stop with ctx done")
-		svr.msgC = nil
 		svr.conn.Close()
 	case err := <-svr.errC:
 		svr.log.Printf("syslog server stop with error: %v", err)
-		svr.msgC = nil
 		svr.conn.Close()
 	}
 }
