@@ -24,11 +24,13 @@ func TestSysLogSrv(t *testing.T) {
 			select {
 			case e := <-msg:
 				fmt.Printf("syslog recieved >> %+v \n", e)
+			default:
+				// avoid panic with goroutine asleep
 			}
 		}
 	}()
 
-	time.Sleep(time.Second * 22)
+	time.Sleep(time.Second * 25)
 }
 
 func TestSysLogSrvForever(t *testing.T) {
