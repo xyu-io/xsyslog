@@ -16,6 +16,7 @@ import (
 type SyslogServer struct {
 	log     *log.Logger
 	udpPort uint
+	conn    net.PacketConn
 	ctx     context.Context
 	errC    chan error
 	msgC    chan Event
@@ -26,6 +27,7 @@ func NewSyslogServer(port uint, logger *log.Logger, ctx context.Context) *Syslog
 		udpPort: port,
 		log:     logger,
 		ctx:     ctx,
+		conn:    nil,
 		errC:    make(chan error, 1),
 		msgC:    make(chan Event, 1000),
 	}
@@ -41,6 +43,7 @@ func (svr *SyslogServer) RunSyslogReceiver() (chan Event, error) {
 	if err != nil {
 		return svr.msgC, fmt.Errorf("listening udp syslog server err: %w", err)
 	}
+	svr.conn = conn
 
 	go func() {
 		maxPacketSize := 8192 // RFC5425#section-4.3.1
@@ -74,9 +77,11 @@ func (svr *SyslogServer) stop() {
 	case <-svr.ctx.Done():
 		svr.log.Warn("syslog server stop with ctx done")
 		svr.msgC = nil
+		svr.conn.Close()
 	case err := <-svr.errC:
 		svr.log.Printf("syslog server stop with error: %v", err)
 		svr.msgC = nil
+		svr.conn.Close()
 	}
 }
 
